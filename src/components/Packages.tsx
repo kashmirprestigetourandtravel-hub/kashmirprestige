@@ -5,9 +5,49 @@ import Image from "next/image";
 import type { Business, TourPackage } from "@/lib/content";
 import { useEnquiryModal } from "@/components/EnquiryModalContext";
 
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("en-IN").format(price);
-}
+const INCLUSIONS = [
+  {
+    label: "Hotel",
+    icon: (
+      <>
+        <path d="M2 20v-8a2 2 0 012-2h16a2 2 0 012 2v8" />
+        <path d="M4 10V6a2 2 0 012-2h12a2 2 0 012 2v4" />
+        <path d="M12 4v6" />
+        <path d="M2 18h20" />
+      </>
+    ),
+  },
+  {
+    label: "Transport",
+    icon: (
+      <>
+        <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 002 12v4c0 .6.4 1 1 1h2" />
+        <circle cx="7" cy="17" r="2" />
+        <path d="M9 17h6" />
+        <circle cx="17" cy="17" r="2" />
+      </>
+    ),
+  },
+  {
+    label: "Meals",
+    icon: (
+      <>
+        <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2" />
+        <path d="M7 2v20" />
+        <path d="M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7" />
+      </>
+    ),
+  },
+  {
+    label: "Sightseeing",
+    icon: (
+      <>
+        <path d="M8 3l4 8 5-5 5 15H2L8 3z" />
+        <path d="M4.14 15.08c2.62-1.57 5.24-1.43 7.86.42 2.74 1.94 5.49 2 8.23.19" />
+      </>
+    ),
+  },
+];
 
 function whatsappLink(business: Business, packageName: string, duration: string) {
   const message = `Hi Kashmir Prestige, I'm interested in the ${packageName} (${duration}). Please share the itinerary and pricing.`;
@@ -85,18 +125,34 @@ function PackageCard({ pkg, business }: { pkg: TourPackage; business: Business }
 
         <div className="mt-4 flex-1" />
 
-        <div className="mt-2 border-t border-brand-900/10 pt-4">
-          <span className="block text-[11px] text-brand-800/60">
-            Starting from
-          </span>
-          <span className="text-2xl font-bold text-brand-900">
-            ₹{formatPrice(pkg.price)}
-            <span className="ml-1 text-xs font-medium text-brand-800/60">
-              /person
-            </span>
-          </span>
+        <div className="mt-2 border-t border-brand-900/10 pt-3">
+          <ul className="grid grid-cols-4 gap-1.5">
+            {INCLUSIONS.map(({ label, icon }) => (
+              <li
+                key={label}
+                className="flex flex-col items-center gap-1 rounded-lg border border-gold-400/30 bg-linear-to-b from-gold-400/10 to-transparent px-1 py-1.5"
+              >
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand-900 text-gold-300">
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    {icon}
+                  </svg>
+                </span>
+                <span className="text-[10px] leading-none font-semibold text-brand-900">{label}</span>
+              </li>
+            ))}
+          </ul>
 
-          <div className="mt-4 grid grid-cols-3 gap-2">
+          <div className="mt-3 grid grid-cols-3 gap-2">
             <a
               href={`tel:+91${business.phone}`}
               className="flex items-center justify-center gap-1.5 rounded-md bg-brand-800 px-2 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-brand-700"
