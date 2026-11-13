@@ -181,7 +181,7 @@ function PackageCard({ pkg, business }: { pkg: TourPackage; business: Business }
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M4 6h16M4 6v12a2 2 0 002 2h12a2 2 0 002-2V6M4 6l8 7 8-7" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              Enquire
+              Get Pricing
             </button>
           </div>
         </div>
